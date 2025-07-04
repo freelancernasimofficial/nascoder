@@ -1,113 +1,92 @@
+/*
+ * nascoder AI Models - Proprietary
+ * Copyright (c) 2025 nascoder Technologies
+ * Unauthorized copying prohibited
+ */
+
 import chalk from 'chalk';
-import axios from 'axios';
 
 export class NascodeModels {
   constructor() {
-    this.models = [
+    this.nascode_models = [
       {
         name: 'GPT-4 Turbo',
         id: 'gpt-4-turbo',
-        description: 'Latest GPT-4 model for complex coding tasks',
-        capabilities: ['Code generation', 'Architecture planning', 'Complex reasoning'],
-        cost: '$10/1M tokens',
-        status: 'available'
-      },
-      {
-        name: 'GPT-4 Vision',
-        id: 'gpt-4-vision',
-        description: 'GPT-4 with image analysis capabilities',
-        capabilities: ['Image analysis', 'Figma conversion', 'UI design'],
-        cost: '$20/1M tokens',
-        status: 'available'
+        description: 'Most capable model for complex coding tasks',
+        capabilities: ['Code Generation', 'Architecture Planning', 'Complex Problem Solving'],
+        cost: 'High',
+        speed: 'Medium'
       },
       {
         name: 'GPT-3.5 Turbo',
         id: 'gpt-35-turbo',
-        description: 'Fast and cost-effective model for simple tasks',
-        capabilities: ['Quick coding', 'Documentation', 'Basic questions'],
-        cost: '$0.50/1M tokens',
-        status: 'available'
+        description: 'Fast and efficient for most development tasks',
+        capabilities: ['Code Generation', 'Code Review', 'Documentation'],
+        cost: 'Low',
+        speed: 'Fast'
+      },
+      {
+        name: 'Claude-3 Opus',
+        id: 'claude-3-opus',
+        description: 'Excellent for code analysis and optimization',
+        capabilities: ['Code Analysis', 'Refactoring', 'Performance Optimization'],
+        cost: 'High',
+        speed: 'Medium'
       },
       {
         name: 'Codex',
         id: 'codex',
-        description: 'Specialized model for code optimization',
-        capabilities: ['Code optimization', 'Bug fixing', 'Code review'],
-        cost: '$8/1M tokens',
-        status: 'available'
+        description: 'Specialized for code completion and generation',
+        capabilities: ['Code Completion', 'Function Generation', 'API Integration'],
+        cost: 'Medium',
+        speed: 'Fast'
       },
       {
-        name: 'Computer Vision',
-        id: 'computer-vision',
-        description: 'Cloud Computer Vision for image analysis',
-        capabilities: ['Image analysis', 'OCR', 'Object detection'],
-        cost: '$1/1K requests',
-        status: 'available'
+        name: 'Gemini Pro',
+        id: 'gemini-pro',
+        description: 'Multimodal model for design-to-code conversion',
+        capabilities: ['Figma Conversion', 'UI Generation', 'Design Analysis'],
+        cost: 'Medium',
+        speed: 'Medium'
       }
     ];
+    this.nascode_protection_active = true;
   }
 
-  async listModels() {
+  async nascode_listModels() {
     console.log(chalk.cyan('\n🤖 Available AI Models:\n'));
-
-    this.models.forEach(model => {
-      const statusColor = model.status === 'available' ? chalk.green : chalk.red;
-      const statusIcon = model.status === 'available' ? '✅' : '❌';
-      
-      console.log(chalk.white(`${statusIcon} ${chalk.bold(model.name)}`));
-      console.log(chalk.gray(`   ${model.description}`));
-      console.log(chalk.gray(`   Cost: ${model.cost}`));
-      console.log(chalk.gray(`   Capabilities: ${model.capabilities.join(', ')}`));
+    
+    this.nascode_models.forEach((nascode_model, nascode_index) => {
+      console.log(chalk.white(`${nascode_index + 1}. ${chalk.bold(nascode_model.name)} (${nascode_model.id})`));
+      console.log(chalk.gray(`   ${nascode_model.description}`));
+      console.log(chalk.blue(`   Capabilities: ${nascode_model.capabilities.join(', ')}`));
+      console.log(chalk.yellow(`   Cost: ${nascode_model.cost} | Speed: ${nascode_model.speed}`));
       console.log('');
     });
 
-    console.log(chalk.cyan('💡 Models are automatically selected based on your request complexity'));
-    console.log(chalk.cyan('💰 Cost optimization ensures you get the best value for each task\n'));
+    console.log(chalk.green('💡 nascoder automatically selects the best model for your task'));
+    console.log(chalk.white('   Different models excel at different types of development work\n'));
   }
 
-  async getModelStatus() {
-    // In production, this would check Cloud OpenAI service status
-    return {
-      total: this.models.length,
-      available: this.models.filter(m => m.status === 'available').length,
-      unavailable: this.models.filter(m => m.status !== 'available').length
+  nascode_getModelById(nascode_model_id) {
+    return this.nascode_models.find(nascode_model => nascode_model.id === nascode_model_id);
+  }
+
+  nascode_getRecommendedModel(nascode_task_type) {
+    const nascode_recommendations = {
+      'code_generation': 'gpt-4-turbo',
+      'figma_conversion': 'gemini-pro',
+      'code_optimization': 'claude-3-opus',
+      'architecture_planning': 'gpt-4-turbo',
+      'database_design': 'gpt-35-turbo',
+      'general_question': 'gpt-35-turbo'
     };
+
+    const nascode_recommended_id = nascode_recommendations[nascode_task_type] || 'gpt-35-turbo';
+    return this.nascode_getModelById(nascode_recommended_id);
   }
 
-  getOptimalModel(intent) {
-    // Smart model selection based on task complexity and type
-    switch (intent.intent) {
-      case 'figma_conversion':
-        return this.models.find(m => m.id === 'gpt-4-vision');
-      
-      case 'architecture_planning':
-      case 'code_generation':
-        if (intent.complexity > 7) {
-          return this.models.find(m => m.id === 'gpt-4-turbo');
-        }
-        return this.models.find(m => m.id === 'gpt-35-turbo');
-      
-      case 'code_optimization':
-        return this.models.find(m => m.id === 'codex');
-      
-      default:
-        return this.models.find(m => m.id === 'gpt-35-turbo');
-    }
-  }
-
-  async checkModelHealth() {
-    console.log(chalk.cyan('🔍 Checking model health...\n'));
-    
-    for (const model of this.models) {
-      try {
-        // Simulate health check
-        await new Promise(resolve => setTimeout(resolve, 100));
-        console.log(chalk.green(`✅ ${model.name} - Healthy`));
-      } catch (error) {
-        console.log(chalk.red(`❌ ${model.name} - Error: ${error.message}`));
-      }
-    }
-    
-    console.log(chalk.cyan('\n✅ Model health check completed\n'));
+  nascode_getAllModels() {
+    return this.nascode_models;
   }
 }
