@@ -1,0 +1,164 @@
+name: nascoder CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install CLI dependencies
+      run: |
+        cd cli
+        npm ci
+    
+    - name: Install Backend dependencies
+      run: |
+        cd backend
+        npm ci
+    
+    - name: Run CLI tests
+      run: |
+        cd cli
+        npm test
+    
+    - name: Run Backend tests
+      run: |
+        cd backend
+        npm test
+    
+    - name: Test CLI commands
+      run: |
+        cd cli
+        node src/index.js features
+        node src/index.js models
+        node src/index.js version
+    
+    - name: Test conversational AI
+      run: |
+        node test-conversation.js
+    
+    - name: Test code generation
+      run: |
+        node test-codegen.js
+
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    
+    - name: Install dependencies
+      run: |
+        cd cli && npm ci
+        cd ../backend && npm ci
+    
+    - name: Run security audit
+      run: |
+        cd cli && npm audit --audit-level moderate
+        cd ../backend && npm audit --audit-level moderate
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [test, security]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    
+    - name: Install dependencies
+      run: |
+        cd cli && npm ci
+        cd ../backend && npm ci
+    
+    - name: Build CLI package
+      run: |
+        cd cli
+        npm run build
+    
+    - name: Build Backend
+      run: |
+        cd backend
+        npm run build
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Build and push Backend Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./backend
+        push: true
+        tags: |
+          ghcr.io/${{ github.repository }}/backend:latest
+          ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [docker]
+    if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[release]')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        registry-url: 'https://registry.npmjs.org'
+    
+    - name: Install dependencies
+      run: |
+        cd cli && npm ci
+    
+    - name: Publish to NPM
+      run: |
+        cd cli
+        npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
