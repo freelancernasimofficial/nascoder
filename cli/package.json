@@ -1,7 +1,7 @@
 {
   "name": "nascoder",
   "version": "1.0.0",
-  "description": "AI-powered conversational development assistant CLI",
+  "description": "🚀 AI-powered conversational development assistant CLI with Azure AI integration, subscription management, and enterprise-grade features",
   "main": "src/index.js",
   "type": "module",
   "bin": {
@@ -15,16 +15,16 @@
     "prepublishOnly": "npm run test"
   },
   "dependencies": {
+    "openai": "^4.20.1",
     "@azure/identity": "^4.0.1",
-    "axios": "^1.6.2",
-    "bcryptjs": "^2.4.3",
-    "chalk": "^5.3.0",
     "commander": "^11.1.0",
-    "dotenv": "^16.3.1",
     "inquirer": "^9.2.12",
+    "chalk": "^5.3.0",
+    "ora": "^7.0.1",
+    "axios": "^1.6.2",
     "jsonwebtoken": "^9.0.2",
-    "openai": "^4.104.0",
-    "ora": "^7.0.1"
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1"
   },
   "keywords": [
     "ai",
@@ -32,8 +32,46 @@
     "development",
     "azure",
     "conversational",
-    "code-generation"
+    "code-generation",
+    "openai",
+    "gpt",
+    "assistant",
+    "developer-tools",
+    "automation",
+    "figma-to-react",
+    "database-design",
+    "architecture-planning",
+    "enterprise",
+    "subscription",
+    "authentication"
   ],
-  "author": "freelancernasim",
-  "license": "MIT"
+  "author": {
+    "name": "freelancernasim",
+    "email": "freelancernasim@example.com",
+    "url": "https://github.com/freelancernasimofficial"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freelancernasimofficial/nascoder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/freelancernasimofficial/nascoder/issues"
+  },
+  "homepage": "https://github.com/freelancernasimofficial/nascoder#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "preferGlobal": true,
+  "files": [
+    "src/",
+    "README.md",
+    "LICENSE"
+  ]
 }

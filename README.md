@@ -24,31 +24,41 @@ nascoder is an enterprise-grade CLI tool that provides conversational AI assista
 
 ## 🚀 Quick Start
 
-### 1. Start the Development Environment
+### **Installation**
+
+#### **Option 1: Install from GitHub (Available Now)**
 ```bash
-cd ~/Desktop/nascoder
-./start.sh
+# Clone the repository
+git clone https://github.com/freelancernasimofficial/nascoder.git
+cd nascoder
+
+# Install dependencies
+cd cli && npm install && npm link
+cd ../backend && npm install
+
+# Verify installation
+nascoder --version
+nascoder --help
 ```
 
-### 2. Login with Demo Account
+#### **Option 2: Install from NPM (Coming Soon)**
 ```bash
-# In a new terminal
-cd ~/Desktop/nascoder/cli
-node src/index.js auth login
+npm install -g nascoder
+```
 
-# Use demo credentials:
+### **Usage**
+```bash
+# Check available features
+nascoder features
+
+# Login with demo account
+nascoder auth login
 # Username: freelancernasim
 # Password: 1234
-```
 
-### 3. Start Conversational Session
-```bash
-node src/index.js
-
-# Now you can ask naturally:
-nascoder> create a react app with typescript
-nascoder> convert this figma design to react component
-nascoder> plan architecture for food delivery app
+# Start conversational session
+nascoder
+# Now ask: "create a react app with typescript"
 ```
 
 ## 📋 Available Commands
