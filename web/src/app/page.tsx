@@ -51,14 +51,34 @@ export default function Home() {
 
       {/* Terminal Header */}
       <div className="relative z-10">
-        <div className="bg-gray-900 border-b border-green-500 px-4 py-2 flex items-center">
-          <div className="flex space-x-2">
-            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+        <div className="bg-gray-900 border-b border-green-500 px-4 py-2 flex items-center justify-between">
+          <div className="flex items-center">
+            <div className="flex space-x-2">
+              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+            </div>
+            <div className="ml-4 text-green-400 text-sm">
+              nascoder@terminal:~$ AI Development Assistant
+            </div>
           </div>
-          <div className="ml-4 text-green-400 text-sm">
-            nascoder@terminal:~$ AI Development Assistant
+          
+          {/* Developer Info - Right Side */}
+          <div className="hidden md:flex items-center space-x-4 text-xs">
+            <div className="text-cyan-400">
+              <span className="text-gray-400">dev:</span> Md Nasim
+            </div>
+            <div className="text-purple-400">
+              <span className="text-gray-400">role:</span> Full-Stack Developer
+            </div>
+            <div className="text-yellow-400">
+              <span className="text-gray-400">status:</span> online
+            </div>
+          </div>
+          
+          {/* Mobile Developer Info */}
+          <div className="md:hidden text-xs text-cyan-400">
+            <span className="text-gray-400">by</span> Md Nasim
           </div>
         </div>
 
@@ -99,6 +119,53 @@ export default function Home() {
                   <div className="mb-1">nascoder auth login</div>
                   <div>nascoder</div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Developer Profile Section */}
+          <div className="bg-gray-900 border border-cyan-500 rounded-lg p-6 mb-8 hover:shadow-lg hover:shadow-cyan-500/20 transition-all">
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-cyan-400 font-bold">{'// Developer Profile'}</div>
+              <div className="flex space-x-3">
+                <a href="https://bd.linkedin.com/in/freelancernasim" target="_blank" rel="noopener noreferrer" 
+                   className="text-blue-400 hover:text-blue-300 transition-colors">
+                  <span className="text-xs">LinkedIn</span>
+                </a>
+                <a href="https://github.com/freelancernasimofficial" target="_blank" rel="noopener noreferrer"
+                   className="text-purple-400 hover:text-purple-300 transition-colors">
+                  <span className="text-xs">GitHub</span>
+                </a>
+              </div>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-black border border-gray-700 rounded p-4">
+                <div className="text-green-400 mb-3">
+                  <div className="text-lg font-bold">Md Nasim</div>
+                  <div className="text-cyan-400 text-sm">Full-Stack Developer & AI Enthusiast</div>
+                </div>
+                <div className="text-gray-300 text-sm space-y-1">
+                  <div><span className="text-yellow-400">const</span> <span className="text-cyan-400">role</span> = <span className="text-green-400">"Senior Software Engineer"</span>;</div>
+                  <div><span className="text-yellow-400">const</span> <span className="text-cyan-400">focus</span> = <span className="text-green-400">"AI-Powered Development Tools"</span>;</div>
+                  <div><span className="text-yellow-400">const</span> <span className="text-cyan-400">passion</span> = <span className="text-green-400">"Building the Future of Code"</span>;</div>
+                </div>
+              </div>
+              
+              <div className="bg-black border border-gray-700 rounded p-4">
+                <div className="text-purple-400 mb-3 font-bold">Tech Stack</div>
+                <div className="text-gray-300 text-sm space-y-1">
+                  <div><span className="text-cyan-400">•</span> React, Next.js, TypeScript</div>
+                  <div><span className="text-cyan-400">•</span> Node.js, Python, AI/ML</div>
+                  <div><span className="text-cyan-400">•</span> Azure, AWS, Docker</div>
+                  <div><span className="text-cyan-400">•</span> OpenAI, GPT, LangChain</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-4 text-center">
+              <div className="text-gray-400 text-sm">
+                <span className="text-green-400">{'>'}</span> Transforming ideas into intelligent software solutions
               </div>
             </div>
           </div>
@@ -245,15 +312,55 @@ export default function Home() {
           </div>
 
           {/* Footer Terminal */}
-          <div className="bg-gray-900 border border-gray-600 rounded-lg p-4 text-center">
-            <div className="text-gray-400 mb-2">
-              {'// Built by developers, for developers'}
+          <div className="bg-gray-900 border border-gray-600 rounded-lg p-6 text-center">
+            <div className="grid md:grid-cols-3 gap-6 mb-4">
+              {/* Product Info */}
+              <div className="text-left">
+                <div className="text-green-400 font-bold mb-2">{'// nascoder'}</div>
+                <div className="text-gray-400 text-sm space-y-1">
+                  <div>AI Development Assistant</div>
+                  <div>Transform your coding workflow</div>
+                  <div>Built for modern developers</div>
+                </div>
+              </div>
+              
+              {/* Developer Info */}
+              <div className="text-left">
+                <div className="text-cyan-400 font-bold mb-2">{'// Created by'}</div>
+                <div className="text-gray-400 text-sm space-y-1">
+                  <div><span className="text-white">Md Nasim</span></div>
+                  <div>Full-Stack Developer</div>
+                  <div>AI & Software Engineering</div>
+                  <div className="flex space-x-3 mt-2">
+                    <a href="https://bd.linkedin.com/in/freelancernasim" target="_blank" rel="noopener noreferrer" 
+                       className="text-blue-400 hover:text-blue-300 text-xs">LinkedIn</a>
+                    <a href="https://github.com/freelancernasimofficial" target="_blank" rel="noopener noreferrer"
+                       className="text-purple-400 hover:text-purple-300 text-xs">GitHub</a>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Contact */}
+              <div className="text-left">
+                <div className="text-yellow-400 font-bold mb-2">{'// Connect'}</div>
+                <div className="text-gray-400 text-sm space-y-1">
+                  <div>freelancernasim@gmail.com</div>
+                  <div>Available for collaboration</div>
+                  <div>Building the future of code</div>
+                </div>
+              </div>
             </div>
-            <div className="text-green-400">
-              © 2025 nascoder - AI Development Assistant
-            </div>
-            <div className="text-cyan-400 text-sm mt-2">
-              {'> Ready to transform your development workflow?'}
+            
+            <div className="border-t border-gray-700 pt-4">
+              <div className="text-gray-400 mb-2">
+                {'// Built by developers, for developers'}
+              </div>
+              <div className="text-green-400">
+                © 2025 nascoder - AI Development Assistant
+              </div>
+              <div className="text-cyan-400 text-sm mt-2">
+                {'> Ready to transform your development workflow?'}
+              </div>
             </div>
           </div>
         </div>
