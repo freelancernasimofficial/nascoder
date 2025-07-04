@@ -1,237 +1,299 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 export default function Home() {
+  const [terminalText, setTerminalText] = useState('');
+  const [showCursor, setShowCursor] = useState(true);
+
+  const codeLines = [
+    '> Initializing nascoder...',
+    '> Loading AI models...',
+    '> Connecting to development matrix...',
+    '> Ready to transform your code ✓'
+  ];
+
+  useEffect(() => {
+    let currentLine = 0;
+    let currentChar = 0;
+    
+    const typeWriter = () => {
+      if (currentLine < codeLines.length) {
+        if (currentChar < codeLines[currentLine].length) {
+          setTerminalText(prev => prev + codeLines[currentLine][currentChar]);
+          currentChar++;
+          setTimeout(typeWriter, 50);
+        } else {
+          setTerminalText(prev => prev + '\n');
+          currentLine++;
+          currentChar = 0;
+          setTimeout(typeWriter, 500);
+        }
+      }
+    };
+
+    typeWriter();
+
+    // Blinking cursor
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 500);
+
+    return () => clearInterval(cursorInterval);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-blue-600 text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <div className="text-2xl mr-3">🤖</div>
-              <span className="text-xl font-bold">nascoder</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <a href="#pricing" className="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg">
-                Get Started
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6">
-            🤖 nascoder
-          </h1>
-          <p className="text-xl mb-8">AI-Powered Conversational Development Assistant</p>
-          <p className="text-lg mb-12">Transform your development workflow with intelligent AI assistance</p>
-          
-          <div className="grid md:grid-cols-3 gap-8 mt-12">
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg">
-              <div className="text-3xl mb-4">🎨</div>
-              <h3 className="text-xl font-bold mb-2">Figma to React</h3>
-              <p>Convert designs to production-ready code instantly</p>
-            </div>
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg">
-              <div className="text-3xl mb-4">🗄️</div>
-              <h3 className="text-xl font-bold mb-2">Database Design</h3>
-              <p>Generate optimized database schemas and migrations</p>
-            </div>
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg">
-              <div className="text-3xl mb-4">⚡</div>
-              <h3 className="text-xl font-bold mb-2">Full-Stack Apps</h3>
-              <p>Create complete applications with AI assistance</p>
-            </div>
-          </div>
-
-          {/* Installation Instructions */}
-          <div className="mt-16 max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6">Get Started in Seconds</h2>
-            <div className="bg-gray-900 text-green-400 p-6 rounded-lg font-mono text-left">
-              <div className="mb-2 text-gray-400"># Install nascoder globally</div>
-              <div className="text-white">npm install -g nascoder</div>
-              <div className="mt-4 mb-2 text-gray-400"># Start using AI assistance</div>
-              <div className="text-white">nascoder auth login</div>
-              <div className="text-white">nascoder</div>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen bg-black text-green-400 font-mono overflow-hidden">
+      {/* Matrix Rain Background */}
+      <div className="fixed inset-0 opacity-10">
+        <div className="matrix-rain"></div>
       </div>
 
-      {/* Features Section */}
-      <div className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose nascoder?</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl mb-4">🚀</div>
-              <h3 className="text-xl font-bold mb-2">Fast Development</h3>
-              <p className="text-gray-600">Accelerate your coding with AI-powered assistance</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl mb-4">🎯</div>
-              <h3 className="text-xl font-bold mb-2">Smart Suggestions</h3>
-              <p className="text-gray-600">Get intelligent code recommendations and optimizations</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl mb-4">🔧</div>
-              <h3 className="text-xl font-bold mb-2">Multiple Languages</h3>
-              <p className="text-gray-600">Support for React, Node.js, Python, and more</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl mb-4">💬</div>
-              <h3 className="text-xl font-bold mb-2">Conversational</h3>
-              <p className="text-gray-600">Natural language interface for easy interaction</p>
-            </div>
+      {/* Terminal Header */}
+      <div className="relative z-10">
+        <div className="bg-gray-900 border-b border-green-500 px-4 py-2 flex items-center">
+          <div className="flex space-x-2">
+            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+          </div>
+          <div className="ml-4 text-green-400 text-sm">
+            nascoder@terminal:~$ AI Development Assistant
           </div>
         </div>
-      </div>
 
-      {/* Pricing Section */}
-      <div id="pricing" className="py-16 bg-gray-100">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Choose Your Plan</h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {/* Free Plan */}
-            <div className="bg-white p-8 rounded-lg shadow-md text-center">
-              <h3 className="text-2xl font-bold mb-4">Free</h3>
-              <div className="text-4xl font-bold text-blue-600 mb-4">$0</div>
-              <p className="text-gray-600 mb-6">50 requests/month</p>
-              <ul className="text-left space-y-2 mb-8">
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Basic code generation
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Community support
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-2">✓</span>
-                  CLI access
-                </li>
-              </ul>
-              <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-semibold">
-                Get Started Free
-              </button>
+        {/* Hero Terminal Section */}
+        <div className="container mx-auto px-4 py-8">
+          <div className="bg-black border border-green-500 rounded-lg p-6 mb-8 shadow-2xl shadow-green-500/20">
+            <div className="mb-4">
+              <pre className="text-green-400 whitespace-pre-wrap">
+{`
+███╗   ██╗ █████╗ ███████╗ ██████╗ ██████╗ ██████╗ ███████╗██████╗ 
+████╗  ██║██╔══██╗██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗
+██╔██╗ ██║███████║███████╗██║     ██║   ██║██║  ██║█████╗  ██████╔╝
+██║╚██╗██║██╔══██║╚════██║██║     ██║   ██║██║  ██║██╔══╝  ██╔══██╗
+██║ ╚████║██║  ██║███████║╚██████╗╚██████╔╝██████╔╝███████╗██║  ██║
+╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
+`}
+              </pre>
             </div>
-
-            {/* Pro Plan */}
-            <div className="bg-white p-8 rounded-lg shadow-md text-center border-2 border-blue-600 relative">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold">
-                Popular
+            
+            <div className="text-cyan-400 mb-4">
+              <div className="typing-animation">
+                {terminalText}
+                <span className={`${showCursor ? 'opacity-100' : 'opacity-0'}`}>█</span>
               </div>
-              <h3 className="text-2xl font-bold mb-4">Pro</h3>
-              <div className="text-4xl font-bold text-blue-600 mb-4">$20</div>
-              <p className="text-gray-600 mb-6">1,000 requests/month</p>
-              <ul className="text-left space-y-2 mb-8">
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Advanced features
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Figma-to-React conversion
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Priority support
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Multiple AI models
-                </li>
-              </ul>
-              <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-semibold">
-                Upgrade to Pro
-              </button>
             </div>
 
-            {/* Enterprise Plan */}
-            <div className="bg-white p-8 rounded-lg shadow-md text-center">
-              <h3 className="text-2xl font-bold mb-4">Enterprise</h3>
-              <div className="text-4xl font-bold text-blue-600 mb-4">$40</div>
-              <p className="text-gray-600 mb-6">Unlimited requests</p>
-              <ul className="text-left space-y-2 mb-8">
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-2">✓</span>
-                  All features included
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Custom AI models
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Team collaboration
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-500 mr-2">✓</span>
-                  Dedicated support
-                </li>
-              </ul>
-              <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-semibold">
-                Contact Sales
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="bg-blue-600 text-white py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Development?</h2>
-          <p className="text-xl mb-8">Join thousands of developers using nascoder to build better software faster</p>
-          <div className="bg-gray-900 text-green-400 p-6 rounded-lg font-mono text-left max-w-2xl mx-auto">
-            <div className="text-white">npm install -g nascoder</div>
-          </div>
-          <p className="mt-6 text-lg">Get started in less than 30 seconds</p>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center mb-4">
-                <div className="text-2xl mr-3">🤖</div>
-                <span className="text-xl font-bold">nascoder</span>
+            <div className="border-t border-green-500 pt-4">
+              <div className="text-yellow-400 mb-2">// AI-Powered Development Assistant</div>
+              <div className="text-white mb-4">
+                Transform your coding experience with intelligent AI assistance.
+                From Figma designs to full-stack applications - nascoder is your coding companion.
               </div>
-              <p className="text-gray-400">AI-powered development assistant for modern developers</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Product</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Features</a></li>
-                <li><a href="#" className="hover:text-white">Pricing</a></li>
-                <li><a href="#" className="hover:text-white">Documentation</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Support</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Help Center</a></li>
-                <li><a href="#" className="hover:text-white">Community</a></li>
-                <li><a href="#" className="hover:text-white">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Company</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">About</a></li>
-                <li><a href="#" className="hover:text-white">Blog</a></li>
-                <li><a href="#" className="hover:text-white">Careers</a></li>
-              </ul>
+              
+              <div className="bg-gray-900 border border-cyan-500 rounded p-4 mb-4">
+                <div className="text-cyan-400 mb-2">$ Quick Start:</div>
+                <div className="text-green-400">
+                  <div className="mb-1">npm install -g nascoder</div>
+                  <div className="mb-1">nascoder auth login</div>
+                  <div>nascoder</div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 nascoder. All rights reserved.</p>
+
+          {/* Code Features Grid */}
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-gray-900 border border-purple-500 rounded-lg p-6 hover:shadow-lg hover:shadow-purple-500/20 transition-all">
+              <div className="text-purple-400 text-2xl mb-3">{'<Figma/>'}</div>
+              <div className="text-cyan-400 font-bold mb-2">Design → Code</div>
+              <div className="text-gray-300 text-sm mb-4">
+                Convert Figma designs to production-ready React components instantly
+              </div>
+              <div className="bg-black border border-purple-400 rounded p-2 text-xs">
+                <div className="text-purple-400">// Input: Figma URL</div>
+                <div className="text-green-400">// Output: React Component</div>
+              </div>
+            </div>
+
+            <div className="bg-gray-900 border border-blue-500 rounded-lg p-6 hover:shadow-lg hover:shadow-blue-500/20 transition-all">
+              <div className="text-blue-400 text-2xl mb-3">{'{ DB }'}</div>
+              <div className="text-cyan-400 font-bold mb-2">Smart Schemas</div>
+              <div className="text-gray-300 text-sm mb-4">
+                Generate optimized database schemas with relationships and migrations
+              </div>
+              <div className="bg-black border border-blue-400 rounded p-2 text-xs">
+                <div className="text-blue-400">// AI-generated schemas</div>
+                <div className="text-green-400">// Auto-migrations</div>
+              </div>
+            </div>
+
+            <div className="bg-gray-900 border border-orange-500 rounded-lg p-6 hover:shadow-lg hover:shadow-orange-500/20 transition-all">
+              <div className="text-orange-400 text-2xl mb-3">{'⚡ Full-Stack'}</div>
+              <div className="text-cyan-400 font-bold mb-2">Complete Apps</div>
+              <div className="text-gray-300 text-sm mb-4">
+                Build entire applications with frontend, backend, and database
+              </div>
+              <div className="bg-black border border-orange-400 rounded p-2 text-xs">
+                <div className="text-orange-400">// Frontend + Backend</div>
+                <div className="text-green-400">// Ready to deploy</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Interactive Code Demo */}
+          <div className="bg-gray-900 border border-green-500 rounded-lg p-6 mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-green-400 font-bold">Live Demo Terminal</div>
+              <div className="text-xs text-gray-500">Try nascoder commands</div>
+            </div>
+            
+            <div className="bg-black border border-gray-700 rounded p-4">
+              <div className="text-green-400 mb-2">user@dev:~$ nascoder</div>
+              <div className="text-cyan-400 mb-2">🤖 nascoder AI Assistant activated</div>
+              <div className="text-white mb-2">💬 How can I help you code today?</div>
+              <div className="text-gray-400 mb-4">
+                <div>• "Create a React login component"</div>
+                <div>• "Design a user database schema"</div>
+                <div>• "Build a REST API for todos"</div>
+                <div>• "Convert this Figma to React"</div>
+              </div>
+              <div className="text-green-400 animate-pulse">█</div>
+            </div>
+          </div>
+
+          {/* Pricing in Terminal Style */}
+          <div className="bg-gray-900 border border-yellow-500 rounded-lg p-6 mb-8">
+            <div className="text-yellow-400 font-bold mb-4 text-center">
+              {'// Subscription Plans'} 
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-4">
+              {/* Free Plan */}
+              <div className="bg-black border border-gray-600 rounded p-4 hover:border-green-500 transition-colors">
+                <div className="text-gray-400 mb-2">{'/* FREE TIER */'}</div>
+                <div className="text-green-400 text-2xl font-bold mb-2">$0<span className="text-sm">/month</span></div>
+                <div className="text-gray-300 mb-4">
+                  <div>• 50 AI requests/month</div>
+                  <div>• Basic code generation</div>
+                  <div>• Community support</div>
+                  <div>• CLI access</div>
+                </div>
+                <button className="w-full bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-4 rounded transition-colors">
+                  git clone free-plan
+                </button>
+              </div>
+
+              {/* Pro Plan */}
+              <div className="bg-black border-2 border-cyan-500 rounded p-4 relative hover:shadow-lg hover:shadow-cyan-500/20">
+                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-cyan-500 text-black px-3 py-1 rounded text-xs font-bold">
+                  POPULAR
+                </div>
+                <div className="text-cyan-400 mb-2">{'/* PRO TIER */'}</div>
+                <div className="text-cyan-400 text-2xl font-bold mb-2">$20<span className="text-sm">/month</span></div>
+                <div className="text-gray-300 mb-4">
+                  <div>• 1,000 AI requests/month</div>
+                  <div>• Advanced features</div>
+                  <div>• Figma-to-React</div>
+                  <div>• Priority support</div>
+                  <div>• Multiple AI models</div>
+                </div>
+                <button className="w-full bg-cyan-600 hover:bg-cyan-700 text-black font-bold py-2 px-4 rounded transition-colors">
+                  npm install pro-plan
+                </button>
+              </div>
+
+              {/* Enterprise Plan */}
+              <div className="bg-black border border-purple-600 rounded p-4 hover:border-purple-500 transition-colors">
+                <div className="text-purple-400 mb-2">{'/* ENTERPRISE */'}</div>
+                <div className="text-purple-400 text-2xl font-bold mb-2">$40<span className="text-sm">/month</span></div>
+                <div className="text-gray-300 mb-4">
+                  <div>• Unlimited requests</div>
+                  <div>• All features</div>
+                  <div>• Custom AI models</div>
+                  <div>• Team collaboration</div>
+                  <div>• Dedicated support</div>
+                </div>
+                <button className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors">
+                  curl enterprise-plan
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Installation Section */}
+          <div className="bg-gray-900 border border-red-500 rounded-lg p-6 mb-8">
+            <div className="text-red-400 font-bold mb-4 text-center">
+              {'// Get Started - Copy & Paste'} 
+            </div>
+            
+            <div className="bg-black border border-gray-700 rounded p-4">
+              <div className="text-gray-400 mb-2"># Install nascoder globally</div>
+              <div className="text-green-400 mb-4 text-lg">npm install -g nascoder</div>
+              
+              <div className="text-gray-400 mb-2"># Authenticate your account</div>
+              <div className="text-cyan-400 mb-4 text-lg">nascoder auth login</div>
+              
+              <div className="text-gray-400 mb-2"># Start coding with AI</div>
+              <div className="text-yellow-400 mb-4 text-lg">nascoder</div>
+              
+              <div className="text-green-400 text-sm">
+                ✓ Installation complete in 30 seconds
+              </div>
+            </div>
+          </div>
+
+          {/* Footer Terminal */}
+          <div className="bg-gray-900 border border-gray-600 rounded-lg p-4 text-center">
+            <div className="text-gray-400 mb-2">
+              {'// Built by developers, for developers'}
+            </div>
+            <div className="text-green-400">
+              © 2025 nascoder - AI Development Assistant
+            </div>
+            <div className="text-cyan-400 text-sm mt-2">
+              {'> Ready to transform your development workflow?'}
+            </div>
           </div>
         </div>
-      </footer>
+      </div>
+
+      <style jsx>{`
+        .matrix-rain {
+          background: linear-gradient(0deg, transparent 24%, rgba(32, 194, 14, 0.05) 25%, rgba(32, 194, 14, 0.05) 26%, transparent 27%, transparent 74%, rgba(32, 194, 14, 0.05) 75%, rgba(32, 194, 14, 0.05) 76%, transparent 77%, transparent);
+          background-size: 50px 50px;
+          animation: matrix 20s linear infinite;
+          height: 100vh;
+          width: 100vw;
+        }
+        
+        @keyframes matrix {
+          0% { background-position: 0 0; }
+          100% { background-position: 50px 50px; }
+        }
+        
+        .typing-animation {
+          white-space: pre-wrap;
+        }
+        
+        @keyframes glow {
+          0%, 100% { box-shadow: 0 0 5px currentColor; }
+          50% { box-shadow: 0 0 20px currentColor; }
+        }
+        
+        .border-green-500:hover {
+          animation: glow 2s infinite;
+        }
+        
+        .border-cyan-500:hover {
+          animation: glow 2s infinite;
+        }
+        
+        .border-purple-500:hover {
+          animation: glow 2s infinite;
+        }
+      `}</style>
     </div>
   );
 }
