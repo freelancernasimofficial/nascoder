@@ -1,20 +1,20 @@
-import { AzureOpenAI } from 'openai';
-import { DefaultAzureCredential } from '@azure/identity';
+import { CloudOpenAI } from 'openai';
+import { DefaultCloudCredential } from '@cloud/identity';
 import axios from 'axios';
 import fs from 'fs/promises';
 import path from 'path';
 
 export class NascodeAI {
   constructor() {
-    this.endpoint = process.env.AZURE_OPENAI_ENDPOINT;
-    this.apiKey = process.env.AZURE_OPENAI_KEY;
+    this.endpoint = process.env.CLOUD_OPENAI_ENDPOINT;
+    this.apiKey = process.env.CLOUD_OPENAI_KEY;
     this.client = null;
     this.initializeClient();
   }
 
   async initializeClient() {
     if (this.apiKey) {
-      this.client = new AzureOpenAI({
+      this.client = new CloudOpenAI({
         endpoint: this.endpoint,
         apiKey: this.apiKey,
         apiVersion: "2024-02-01"

@@ -1,3 +1,9 @@
+/*
+ * nascoder Authentication Manager - Proprietary
+ * Copyright (c) 2025 nascoder Technologies
+ * Unauthorized copying prohibited
+ */
+
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import axios from 'axios';
@@ -8,98 +14,99 @@ import os from 'os';
 
 export class NascodeAuth {
   constructor() {
-    this.configDir = path.join(os.homedir(), '.nascoder');
-    this.configFile = path.join(this.configDir, 'config.json');
-    this.apiUrl = process.env.NASCODER_API_URL || 'http://localhost:3001/api';
+    this.nascode_config_dir = path.join(os.homedir(), '.nascoder');
+    this.nascode_config_file = path.join(this.nascode_config_dir, 'config.json');
+    this.nascode_api_url = process.env.NASCODER_API_URL || 'http://localhost:3001/api';
+    this.nascode_protection_active = true;
   }
 
-  async ensureConfigDir() {
+  async nascode_ensureConfigDir() {
     try {
-      await fs.mkdir(this.configDir, { recursive: true });
-    } catch (error) {
+      await fs.mkdir(this.nascode_config_dir, { recursive: true });
+    } catch (nascode_error) {
       // Directory already exists
     }
   }
 
-  async saveConfig(config) {
-    await this.ensureConfigDir();
-    await fs.writeFile(this.configFile, JSON.stringify(config, null, 2));
+  async nascode_saveConfig(nascode_config) {
+    await this.nascode_ensureConfigDir();
+    await fs.writeFile(this.nascode_config_file, JSON.stringify(nascode_config, null, 2));
   }
 
-  async loadConfig() {
+  async nascode_loadConfig() {
     try {
-      const data = await fs.readFile(this.configFile, 'utf8');
-      return JSON.parse(data);
-    } catch (error) {
+      const nascode_data = await fs.readFile(this.nascode_config_file, 'utf8');
+      return JSON.parse(nascode_data);
+    } catch (nascode_error) {
       return null;
     }
   }
 
-  async login() {
+  async nascode_login() {
     console.log(chalk.cyan('\n🔐 nascoder Authentication\n'));
 
-    const answers = await inquirer.prompt([
+    const nascode_answers = await inquirer.prompt([
       {
         type: 'input',
         name: 'username',
         message: 'Username:',
-        validate: (input) => input.length > 0 || 'Username is required'
+        validate: (nascode_input) => nascode_input.length > 0 || 'Username is required'
       },
       {
         type: 'password',
         name: 'password',
         message: 'Password:',
         mask: '*',
-        validate: (input) => input.length > 0 || 'Password is required'
+        validate: (nascode_input) => nascode_input.length > 0 || 'Password is required'
       }
     ]);
 
     try {
       console.log(chalk.yellow('🔄 Authenticating...'));
       
-      const response = await axios.post(`${this.apiUrl}/auth/login`, {
-        username: answers.username,
-        password: answers.password
+      const nascode_response = await axios.post(`${this.nascode_api_url}/auth/login`, {
+        username: nascode_answers.username,
+        password: nascode_answers.password
       });
 
-      const { token, user } = response.data;
+      const { token: nascode_token, user: nascode_user } = nascode_response.data;
       
-      await this.saveConfig({
-        token,
-        user,
+      await this.nascode_saveConfig({
+        token: nascode_token,
+        user: nascode_user,
         loginTime: new Date().toISOString()
       });
 
       console.log(chalk.green('✅ Successfully authenticated!'));
-      console.log(chalk.white(`   Welcome back, ${user.username}!`));
-      console.log(chalk.white(`   Subscription: ${user.subscription_plan}`));
+      console.log(chalk.white(`   Welcome back, ${nascode_user.username}!`));
+      console.log(chalk.white(`   Subscription: ${nascode_user.subscription_plan}`));
       console.log(chalk.white(`   Type 'nascoder' to start coding!\n`));
 
-    } catch (error) {
-      if (error.response?.status === 401) {
+    } catch (nascode_error) {
+      if (nascode_error.response?.status === 401) {
         console.log(chalk.red('❌ Invalid username or password'));
-      } else if (error.code === 'ECONNREFUSED') {
+      } else if (nascode_error.code === 'ECONNREFUSED') {
         console.log(chalk.red('❌ Cannot connect to nascoder backend'));
         console.log(chalk.yellow('   Make sure the backend server is running'));
       } else {
-        console.log(chalk.red('❌ Authentication failed:', error.message));
+        console.log(chalk.red('❌ Authentication failed:', nascode_error.message));
       }
     }
   }
 
-  async logout() {
+  async nascode_logout() {
     try {
-      await fs.unlink(this.configFile);
+      await fs.unlink(this.nascode_config_file);
       console.log(chalk.green('✅ Successfully logged out'));
-    } catch (error) {
+    } catch (nascode_error) {
       console.log(chalk.yellow('⚠️  Already logged out'));
     }
   }
 
-  async status() {
-    const config = await this.loadConfig();
+  async nascode_status() {
+    const nascode_config = await this.nascode_loadConfig();
     
-    if (!config || !config.token) {
+    if (!nascode_config || !nascode_config.token) {
       console.log(chalk.red('❌ Not authenticated'));
       console.log(chalk.white('   Run: nascoder auth login'));
       return;
@@ -107,51 +114,51 @@ export class NascodeAuth {
 
     try {
       // Verify token with backend
-      const response = await axios.get(`${this.apiUrl}/auth/me`, {
-        headers: { Authorization: `Bearer ${config.token}` }
+      const nascode_response = await axios.get(`${this.nascode_api_url}/auth/me`, {
+        headers: { Authorization: `Bearer ${nascode_config.token}` }
       });
 
-      const user = response.data;
+      const nascode_user = nascode_response.data;
       
       console.log(chalk.green('✅ Authenticated'));
-      console.log(chalk.white(`   User: ${user.username}`));
-      console.log(chalk.white(`   Email: ${user.email}`));
-      console.log(chalk.white(`   Subscription: ${user.subscription_plan}`));
-      console.log(chalk.white(`   Login time: ${new Date(config.loginTime).toLocaleString()}`));
+      console.log(chalk.white(`   User: ${nascode_user.username}`));
+      console.log(chalk.white(`   Email: ${nascode_user.email}`));
+      console.log(chalk.white(`   Subscription: ${nascode_user.subscription_plan}`));
+      console.log(chalk.white(`   Login time: ${new Date(nascode_config.loginTime).toLocaleString()}`));
       
       // Show usage stats if available
-      if (user.usage) {
+      if (nascode_user.usage) {
         console.log(chalk.cyan('\n📊 Usage Statistics:'));
-        console.log(chalk.white(`   Requests this month: ${user.usage.requests_used}`));
-        console.log(chalk.white(`   Requests remaining: ${user.usage.requests_remaining}`));
+        console.log(chalk.white(`   Requests this month: ${nascode_user.usage.requests_used}`));
+        console.log(chalk.white(`   Requests remaining: ${nascode_user.usage.requests_remaining}`));
       }
 
-    } catch (error) {
+    } catch (nascode_error) {
       console.log(chalk.red('❌ Token expired or invalid'));
       console.log(chalk.white('   Run: nascoder auth login'));
     }
   }
 
-  async getToken() {
-    const config = await this.loadConfig();
-    return config?.token;
+  async nascode_getToken() {
+    const nascode_config = await this.nascode_loadConfig();
+    return nascode_config?.token;
   }
 
-  async getUser() {
-    const config = await this.loadConfig();
-    return config?.user;
+  async nascode_getUser() {
+    const nascode_config = await this.nascode_loadConfig();
+    return nascode_config?.user;
   }
 
-  async isAuthenticated() {
-    const token = await this.getToken();
-    if (!token) return false;
+  async nascode_isAuthenticated() {
+    const nascode_token = await this.nascode_getToken();
+    if (!nascode_token) return false;
 
     try {
-      const response = await axios.get(`${this.apiUrl}/auth/me`, {
-        headers: { Authorization: `Bearer ${token}` }
+      const nascode_response = await axios.get(`${this.nascode_api_url}/auth/me`, {
+        headers: { Authorization: `Bearer ${nascode_token}` }
       });
       return true;
-    } catch (error) {
+    } catch (nascode_error) {
       return false;
     }
   }

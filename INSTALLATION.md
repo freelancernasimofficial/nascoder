@@ -61,20 +61,6 @@ Commands:
 nascoder features
 ```
 
-**Output:**
-```
-🚀 nascoder Capabilities:
-   • 🎨 Figma to React conversion
-   • 🏗️  Full-stack app generation
-   • 📊 Database schema design
-   • 🔧 Code analysis & optimization
-   • 📱 Mobile app development
-   • ☁️  Azure deployment ready
-   • 🤖 60+ AI models available
-   • 💬 Conversational interface
-   • 🔒 Enterprise-grade security
-```
-
 ### **3. List AI Models**
 ```bash
 nascoder models
@@ -82,10 +68,8 @@ nascoder models
 
 ### **4. Authentication**
 ```bash
-# Login (use demo account for testing)
+# Register/Login
 nascoder auth login
-# Username: freelancernasim
-# Password: 1234
 
 # Check status
 nascoder auth status
@@ -124,7 +108,7 @@ nascoder> plan architecture for food delivery app
 - **npm**: v10.0.0 or higher
 - **Memory**: 1GB RAM
 - **Storage**: 500MB free space
-- **Internet**: For Azure AI features
+- **Internet**: For AI features
 
 ### **Check Your System**
 ```bash
@@ -133,10 +117,6 @@ node --version
 
 # Check npm version
 npm --version
-
-# Check available memory
-free -h  # Linux
-vm_stat  # macOS
 ```
 
 ---
@@ -155,10 +135,6 @@ cd ../backend && npm install
 
 # Start development environment
 cd .. && ./start.sh
-
-# Test the system
-node test-conversation.js
-node test-codegen.js
 ```
 
 ### **Backend Server (Optional)**
@@ -182,9 +158,6 @@ docker build -t nascoder-backend .
 
 # Run container
 docker run -p 3001:3001 nascoder-backend
-
-# Or use docker-compose (coming soon)
-docker-compose up
 ```
 
 ---
@@ -228,17 +201,6 @@ npm start
 curl http://localhost:3001/health
 ```
 
-#### **5. Authentication failed**
-```bash
-# Solution: Use demo credentials
-# Username: freelancernasim
-# Password: 1234
-
-# Or check backend logs
-cd nascoder/backend
-npm start
-```
-
 ---
 
 ## 🔄 **Updates**
@@ -271,12 +233,10 @@ curl -s https://api.github.com/repos/freelancernasimofficial/nascoder/releases/l
 ### **Documentation**
 - 📖 [README](https://github.com/freelancernasimofficial/nascoder/blob/main/README.md)
 - 🤝 [Contributing](https://github.com/freelancernasimofficial/nascoder/blob/main/CONTRIBUTING.md)
-- 🧪 [Test Results](https://github.com/freelancernasimofficial/nascoder/blob/main/TEST_RESULTS.md)
 
 ### **Support**
 - 🐛 [Report Issues](https://github.com/freelancernasimofficial/nascoder/issues)
 - 💬 [Discussions](https://github.com/freelancernasimofficial/nascoder/discussions)
-- 📧 Email: Contact repository maintainers
 
 ### **Community**
 - ⭐ [Star the Repository](https://github.com/freelancernasimofficial/nascoder)
@@ -293,7 +253,7 @@ After installation, you should be able to run:
 nascoder --help        # Show help
 nascoder features      # List capabilities
 nascoder models        # Show AI models
-nascoder auth login    # Login (demo: freelancernasim/1234)
+nascoder auth login    # Register/Login
 nascoder               # Start conversational session
 ```
 

@@ -1,6 +1,6 @@
 # 🚀 nascoder - AI-Powered Conversational Development Assistant
 
-nascoder is an enterprise-grade CLI tool that provides conversational AI assistance for software development, powered by Azure AI services.
+nascoder is an enterprise-grade CLI tool that provides conversational AI assistance for software development.
 
 ## ✨ Features
 
@@ -9,8 +9,8 @@ nascoder is an enterprise-grade CLI tool that provides conversational AI assista
 - 📊 **Database Design** - Generate optimized database schemas and migrations
 - 🔧 **Code Analysis & Optimization** - Improve existing code performance and quality
 - 📱 **Mobile App Development** - React Native and native app generation
-- ☁️ **Azure Integration** - Seamless deployment to Azure services
-- 🤖 **60+ AI Models** - Access to multiple Azure AI models via intelligent routing
+- ☁️ **Cloud Integration** - Seamless deployment to cloud services
+- 🤖 **Multiple AI Models** - Access to various AI models via intelligent routing
 - 💬 **Conversational Interface** - Natural language interaction, no complex commands
 - 🔒 **Enterprise Security** - JWT authentication, role-based access, audit logging
 
@@ -51,10 +51,8 @@ npm install -g nascoder
 # Check available features
 nascoder features
 
-# Login with demo account
+# Login (registration required)
 nascoder auth login
-# Username: freelancernasim
-# Password: 1234
 
 # Start conversational session
 nascoder
@@ -63,7 +61,7 @@ nascoder
 
 ## 📋 Available Commands
 
-### Pre-Chat Commands (Limited)
+### **Pre-Chat Commands (Limited)**
 ```bash
 nascoder auth login          # Login to your account
 nascoder auth status         # Check authentication status
@@ -73,7 +71,7 @@ nascoder features           # Display all capabilities
 nascoder version            # Show version info
 ```
 
-### Conversational Interface
+### **Conversational Interface**
 Once you run `nascoder` without arguments, you enter the conversational mode where you can:
 
 - **Code Generation**: "create a react component for user dashboard"
@@ -92,16 +90,13 @@ nascoder/
 │   │   ├── chat/          # Conversational engine
 │   │   ├── auth/          # Authentication
 │   │   ├── permissions/   # Permission system
-│   │   └── ai/           # Azure AI integration
+│   │   └── ai/           # AI integration
 ├── backend/               # API server
 │   ├── src/
 │   │   ├── server.js     # Express server
 │   │   ├── routes/       # API routes
 │   │   ├── models/       # Database models
 │   │   └── middleware/   # Auth middleware
-├── azure/                 # Azure infrastructure
-│   ├── deploy.sh         # Deployment script
-│   └── models.json       # AI model configurations
 └── docs/                  # Documentation
 ```
 
@@ -116,46 +111,11 @@ nascoder/
 
 ## 💰 Cost Optimization
 
-nascoder uses intelligent model routing to minimize costs:
-
-- **GPT-3.5 Turbo** (60% of requests) - $0.50/1M tokens
-- **GPT-4 Turbo** (30% of requests) - $10/1M tokens  
-- **GPT-4 Vision** (10% of requests) - $20/1M tokens
-
-**Estimated Monthly Costs:**
-- Light usage (100 requests): $25-30
-- Medium usage (500 requests): $80-100
-- Heavy usage (2000+ requests): $200-300
-
-## 🚀 Azure Deployment
-
-### 1. Deploy Infrastructure
-```bash
-cd azure
-./deploy.sh
-```
-
-### 2. Update Environment Variables
-```bash
-# Update .env with Azure resource details
-AZURE_OPENAI_ENDPOINT=https://nascoder-openai.openai.azure.com/
-AZURE_OPENAI_KEY=your-actual-key
-DB_SERVER=nascoder-sql-server.database.windows.net
-```
-
-### 3. Deploy Backend to Azure Container Apps
-```bash
-# Build and deploy backend
-az containerapp create \
-  --name nascoder-backend \
-  --resource-group nascoder-rg \
-  --environment nascoder-env \
-  --image nascoder-backend:latest
-```
+nascoder uses intelligent model routing to minimize costs while maintaining high quality output for all development tasks.
 
 ## 🧪 Development
 
-### Start Development Environment
+### **Start Development Environment**
 ```bash
 # Terminal 1: Start backend
 cd backend && npm run dev
@@ -164,7 +124,7 @@ cd backend && npm run dev
 cd cli && node src/index.js
 ```
 
-### Run Tests
+### **Run Tests**
 ```bash
 # Backend tests
 cd backend && npm test
@@ -175,7 +135,7 @@ cd cli && npm test
 
 ## 📊 Usage Examples
 
-### Create React Application
+### **Create React Application**
 ```
 nascoder> create a modern react app with typescript, tailwind, and authentication
 
@@ -197,9 +157,9 @@ Choose permission scope:
 [1] Grant for this session ✅
 ```
 
-### Convert Figma Design
+### **Convert Figma Design**
 ```
-nascoder> convert this figma design to react component: https://figma.com/file/abc123
+nascoder> convert this figma design to react component: [figma-url]
 
 🤖 Analyzing Figma design...
    • Detected: User dashboard with sidebar navigation
@@ -217,35 +177,24 @@ nascoder> convert this figma design to react component: https://figma.com/file/a
 
 ## 🔧 Configuration
 
-### Environment Variables
+### **Environment Variables**
 ```bash
-# Azure AI Configuration
-AZURE_OPENAI_ENDPOINT=https://your-openai.openai.azure.com/
-AZURE_OPENAI_KEY=your-openai-key
-
-# Database Configuration  
-DB_SERVER=your-sql-server.database.windows.net
-DB_NAME=nascoder-db
-DB_USER=your-username
-DB_PASSWORD=your-password
-
-# Application Configuration
-JWT_SECRET=your-jwt-secret
+# API Configuration
+NASCODER_API_URL=http://localhost:3001/api
 PORT=3001
 NODE_ENV=production
+
+# CORS Configuration
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
 ```
 
-### Subscription Management
+### **Subscription Management**
 ```bash
 # Check current subscription
 nascoder auth status
 
 # View available plans
 curl http://localhost:3001/api/subscriptions/plans
-
-# Usage statistics
-curl -H "Authorization: Bearer $TOKEN" \
-     http://localhost:3001/api/auth/me
 ```
 
 ## 🤝 Contributing
@@ -277,5 +226,4 @@ MIT License - see LICENSE file for details
 
 ---
 
-**Built with ❤️ by freelancernasim**
-**Powered by Azure AI Services**
+**Built with ❤️ for developers worldwide**

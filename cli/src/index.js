@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 
+/*
+ * nascoder - Proprietary Software
+ * Copyright (c) 2025 nascoder Technologies
+ * All Rights Reserved - Unauthorized copying prohibited
+ */
+
 import { Command } from 'commander';
 import chalk from 'chalk';
 import { NascodeAuth } from './auth/manager.js';
@@ -9,12 +15,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const program = new Command();
-const auth = new NascodeAuth();
-const models = new NascodeModels();
+const nascode_program = new Command();
+const nascode_auth = new NascodeAuth();
+const nascode_models = new NascodeModels();
 
-// ASCII Art Banner
-const showBanner = () => {
+// nascoder ASCII Art Banner
+const nascode_showBanner = () => {
   console.log(chalk.cyan(`
 ╔═══════════════════════════════════════════════════════════╗
 ║                                                           ║
@@ -26,32 +32,32 @@ const showBanner = () => {
 ║    ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝ ║
 ║                                                           ║
 ║           AI-Powered Conversational Development Assistant ║
-║                     Powered by Azure AI                  ║
+║                     Enterprise Edition                    ║
 ╚═══════════════════════════════════════════════════════════╝
   `));
 };
 
 // Pre-chat commands only
-program
+nascode_program
   .name('nascoder')
   .description('AI-powered conversational development assistant')
   .version('1.0.0');
 
 // Authentication commands
-program
+nascode_program
   .command('auth')
   .description('Authentication management')
   .argument('<action>', 'login, logout, or status')
-  .action(async (action) => {
-    switch (action) {
+  .action(async (nascode_action) => {
+    switch (nascode_action) {
       case 'login':
-        await auth.login();
+        await nascode_auth.nascode_login();
         break;
       case 'logout':
-        await auth.logout();
+        await nascode_auth.nascode_logout();
         break;
       case 'status':
-        await auth.status();
+        await nascode_auth.nascode_status();
         break;
       default:
         console.log(chalk.red('Unknown auth action. Use: login, logout, or status'));
@@ -59,15 +65,15 @@ program
   });
 
 // Models command
-program
+nascode_program
   .command('models')
   .description('List available AI models')
   .action(async () => {
-    await models.listModels();
+    await nascode_models.nascode_listModels();
   });
 
 // Features command
-program
+nascode_program
   .command('features')
   .description('Show available features')
   .action(() => {
@@ -77,21 +83,21 @@ program
     console.log(chalk.white('   • 📊 Database schema design'));
     console.log(chalk.white('   • 🔧 Code analysis & optimization'));
     console.log(chalk.white('   • 📱 Mobile app development'));
-    console.log(chalk.white('   • ☁️  Azure deployment ready'));
-    console.log(chalk.white('   • 🤖 60+ AI models available'));
+    console.log(chalk.white('   • ☁️  Cloud deployment ready'));
+    console.log(chalk.white('   • 🤖 Multiple AI models available'));
     console.log(chalk.white('   • 💬 Conversational interface'));
     console.log(chalk.white('   • 🔒 Enterprise-grade security\n'));
   });
 
 // Main entry point - start chat session
-const args = process.argv.slice(2);
+const nascode_args = process.argv.slice(2);
 
-if (args.length === 0) {
+if (nascode_args.length === 0) {
   // No arguments = start chat session
-  showBanner();
-  const chat = new NascodeChat();
-  await chat.start();
+  nascode_showBanner();
+  const nascode_chat = new NascodeChat();
+  await nascode_chat.nascode_start();
 } else {
   // Parse pre-chat commands
-  program.parse();
+  nascode_program.parse();
 }

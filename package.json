@@ -1,0 +1,51 @@
+{
+  "name": "nascoder-workspace",
+  "version": "1.0.0",
+  "description": "nascoder AI Development Assistant - Workspace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "./start.sh",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:cli\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:cli": "cd cli && npm run dev",
+    "build": "npm run build:cli && npm run build:backend",
+    "build:cli": "cd cli && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "protect": "node scripts/obfuscate.js",
+    "build:protected": "node scripts/build-protected.js",
+    "test": "npm run test:cli && npm run test:backend",
+    "test:cli": "cd cli && npm test",
+    "test:backend": "cd backend && npm test",
+    "clean": "rm -rf dist/ node_modules/ cli/node_modules/ backend/node_modules/",
+    "install:all": "npm install && cd cli && npm install && cd ../backend && npm install"
+  },
+  "workspaces": [
+    "cli",
+    "backend"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "development",
+    "assistant",
+    "conversational",
+    "enterprise"
+  ],
+  "author": {
+    "name": "nascoder Technologies",
+    "email": "contact@nascoder.com"
+  },
+  "license": "Proprietary",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freelancernasimofficial/nascoder.git"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

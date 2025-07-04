@@ -73,7 +73,7 @@ export class NascodeChat {
   showWelcome(user) {
     console.log(chalk.cyan('\n┌─────────────────────────────────────────────────────────────┐'));
     console.log(chalk.cyan('│  🚀 Welcome to nascoder - AI Development Assistant          │'));
-    console.log(chalk.cyan('│  Connected to Azure AI Hub (60+ models available)          │'));
+    console.log(chalk.cyan('│  Connected to Cloud AI Hub (60+ models available)          │'));
     console.log(chalk.cyan('│  Type \'help\' for commands or just describe what you need   │'));
     console.log(chalk.cyan('└─────────────────────────────────────────────────────────────┘'));
     

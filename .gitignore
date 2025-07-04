@@ -75,8 +75,14 @@ schema.sql
 *.tmp
 *.temp
 
-# Azure specific
-.azure/
-
 # Local configuration
 config.local.json
+
+# Internal/Sensitive files (DO NOT COMMIT)
+COMPREHENSIVE_PLAN.md
+DEPLOYMENT_COMPLETE.md
+TEST_RESULTS.md
+GITHUB_REPOSITORY.md
+USER_ACCESS_GUIDE.md
+*_INTERNAL.md
+*_PRIVATE.md

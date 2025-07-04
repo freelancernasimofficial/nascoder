@@ -39,7 +39,7 @@ export class NascodeModels {
       {
         name: 'Computer Vision',
         id: 'computer-vision',
-        description: 'Azure Computer Vision for image analysis',
+        description: 'Cloud Computer Vision for image analysis',
         capabilities: ['Image analysis', 'OCR', 'Object detection'],
         cost: '$1/1K requests',
         status: 'available'
@@ -66,7 +66,7 @@ export class NascodeModels {
   }
 
   async getModelStatus() {
-    // In production, this would check Azure OpenAI service status
+    // In production, this would check Cloud OpenAI service status
     return {
       total: this.models.length,
       available: this.models.filter(m => m.status === 'available').length,

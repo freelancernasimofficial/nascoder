@@ -26,7 +26,7 @@ export class Database {
       }
 
       this.pool = await sql.connect(this.config);
-      console.log('✅ Connected to Azure SQL Database');
+      console.log('✅ Connected to Cloud SQL Database');
       
       // Create tables if they don't exist
       await this.createTables();
