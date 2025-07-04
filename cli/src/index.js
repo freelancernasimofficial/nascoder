@@ -47,9 +47,12 @@ nascode_program
 nascode_program
   .command('auth')
   .description('Authentication management')
-  .argument('<action>', 'login, logout, or status')
+  .argument('<action>', 'register, login, logout, or status')
   .action(async (nascode_action) => {
     switch (nascode_action) {
+      case 'register':
+        await nascode_auth.nascode_register();
+        break;
       case 'login':
         await nascode_auth.nascode_login();
         break;
@@ -60,7 +63,7 @@ nascode_program
         await nascode_auth.nascode_status();
         break;
       default:
-        console.log(chalk.red('Unknown auth action. Use: login, logout, or status'));
+        console.log(chalk.red('Unknown auth action. Use: register, login, logout, or status'));
     }
   });
 

@@ -149,17 +149,98 @@ export class NascodeAuth {
     return nascode_config?.user;
   }
 
-  async nascode_isAuthenticated() {
-    const nascode_token = await this.nascode_getToken();
-    if (!nascode_token) return false;
+  async nascode_register() {
+    console.log(chalk.cyan('\n📝 Create nascoder Account\n'));
+
+    const nascode_answers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'username',
+        message: 'Choose username:',
+        validate: (nascode_input) => {
+          if (nascode_input.length < 3) return 'Username must be at least 3 characters';
+          if (!/^[a-zA-Z0-9_]+$/.test(nascode_input)) return 'Username can only contain letters, numbers, and underscores';
+          return true;
+        }
+      },
+      {
+        type: 'input',
+        name: 'email',
+        message: 'Email address:',
+        validate: (nascode_input) => {
+          const nascode_email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return nascode_email_regex.test(nascode_input) || 'Please enter a valid email address';
+        }
+      },
+      {
+        type: 'password',
+        name: 'password',
+        message: 'Create password:',
+        mask: '*',
+        validate: (nascode_input) => {
+          if (nascode_input.length < 6) return 'Password must be at least 6 characters';
+          return true;
+        }
+      },
+      {
+        type: 'password',
+        name: 'confirmPassword',
+        message: 'Confirm password:',
+        mask: '*',
+        validate: (nascode_input, nascode_answers) => {
+          return nascode_input === nascode_answers.password || 'Passwords do not match';
+        }
+      },
+      {
+        type: 'list',
+        name: 'subscription',
+        message: 'Choose subscription plan:',
+        choices: [
+          { name: '🆓 Free - 50 requests/month', value: 'Free' },
+          { name: '💎 Pro - $20/month, 1,000 requests', value: 'Pro' },
+          { name: '🚀 Enterprise - $40/month, unlimited', value: 'Enterprise' }
+        ]
+      }
+    ]);
 
     try {
-      const nascode_response = await axios.get(`${this.nascode_api_url}/auth/me`, {
-        headers: { Authorization: `Bearer ${nascode_token}` }
+      console.log(chalk.yellow('🔄 Creating account...'));
+      
+      const nascode_response = await axios.post(`${this.nascode_api_url}/auth/register`, {
+        username: nascode_answers.username,
+        email: nascode_answers.email,
+        password: nascode_answers.password,
+        subscription_plan: nascode_answers.subscription
       });
-      return true;
+
+      const { token: nascode_token, user: nascode_user } = nascode_response.data;
+      
+      await this.nascode_saveConfig({
+        token: nascode_token,
+        user: nascode_user,
+        loginTime: new Date().toISOString()
+      });
+
+      console.log(chalk.green('✅ Account created successfully!'));
+      console.log(chalk.white(`   Welcome to nascoder, ${nascode_user.username}!`));
+      console.log(chalk.white(`   Email: ${nascode_user.email}`));
+      console.log(chalk.white(`   Subscription: ${nascode_user.subscription_plan}`));
+      console.log(chalk.white(`   Type 'nascoder' to start coding!\n`));
+
     } catch (nascode_error) {
-      return false;
+      if (nascode_error.response?.status === 400) {
+        const nascode_errors = nascode_error.response.data.errors;
+        if (nascode_errors) {
+          console.log(chalk.red('❌ Registration failed:'));
+          nascode_errors.forEach(err => console.log(chalk.red(`   • ${err.msg}`)));
+        } else {
+          console.log(chalk.red('❌ Registration failed:', nascode_error.response.data.error));
+        }
+      } else if (nascode_error.code === 'ECONNREFUSED') {
+        console.log(chalk.red('❌ Cannot connect to nascoder backend'));
+        console.log(chalk.yellow('   Make sure the backend server is running'));
+      } else {
+        console.log(chalk.red('❌ Registration failed:', nascode_error.message));
+      }
     }
   }
-}
