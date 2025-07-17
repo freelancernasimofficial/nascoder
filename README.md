@@ -5,12 +5,30 @@
 NasCoder is a powerful command-line AI assistant that brings the capabilities of Claude AI models directly to your terminal through AWS Bedrock.
 
 ```
+$ nascoder
+
 ███╗   ██╗ █████╗ ███████╗ ██████╗ ██████╗ ██████╗ ███████╗██████╗ 
 ████╗  ██║██╔══██╗██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗
 ██╔██╗ ██║███████║███████╗██║     ██║   ██║██║  ██║█████╗  ██████╔╝
 ██║╚██╗██║██╔══██║╚════██║██║     ██║   ██║██║  ██║██╔══╝  ██╔══██╗
 ██║ ╚████║██║  ██║███████║╚██████╗╚██████╔╝██████╔╝███████╗██║  ██║
 ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
+
+┌─ NasCoder v1.0 - AI Assistant powered by AWS Bedrock ─┐
+│ Status: Authenticated                                  │
+│ Current Model: claude-3-opus                          │
+│ Type /help for commands or /quit to exit             │
+└───────────────────────────────────────────────────────┘
+
+You: Hello! Can you help me write a Python function?
+
+NasCoder: I'd be happy to help you write a Python function! What specific functionality are you looking to implement?
+
+You: /switch claude-3-sonnet
+Switched to claude-3-sonnet
+
+You: /quit
+Goodbye!
 ```
 
 ## ✨ Features
